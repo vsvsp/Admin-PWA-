@@ -5,102 +5,158 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b3b82">
 
-<title>Darshana Sethu Admin — Fare Rates v4</title>
+<title>Darshana Sethu Admin</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#eef4fb;
-  color:#10233f
+  color:#10233f;
 }
 
 :root{
   --b:#0b3b82;
   --b2:#1769c2;
-  --line:#d9e4f2
+  --line:#d9e4f2;
 }
 
-.hide{display:none!important}
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
 
 .login{
   min-height:100vh;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#062b65,#1970c8)
+  background:linear-gradient(135deg,#062b65,#1970c8);
+  padding:20px;
 }
 
-.box{
-  width:min(420px,92%);
+.loginbox{
+  width:min(430px,100%);
   background:#fff;
-  border-radius:20px;
+  border-radius:22px;
   padding:30px;
+  box-shadow:0 20px 60px #001d4c55;
   text-align:center;
-  box-shadow:0 20px 60px #001d4c55
 }
 
 .logo{
   width:70px;
   height:70px;
   border-radius:50%;
-  background:#fff;
-  color:var(--b);
+  margin:0 auto 12px;
+  background:#0b3b82;
+  color:#fff;
   display:grid;
   place-items:center;
-  margin:auto;
-  font-weight:800;
-  font-size:25px
+  font-size:28px;
+  font-weight:900;
 }
 
-.box input{
+.loginbox h2{
+  color:var(--b);
+  margin:8px 0;
+}
+
+.sub{
+  color:#73849a;
+  margin-bottom:18px;
+}
+
+.loginbox input{
   width:100%;
-  padding:13px;
+  padding:14px;
   margin:7px 0;
   border:1px solid #ccd9e8;
-  border-radius:10px
+  border-radius:11px;
+  font-size:15px;
+  outline:none;
+}
+
+.loginbox input:focus{
+  border-color:#1769c2;
+  box-shadow:0 0 0 3px #1769c220;
 }
 
 .btn{
   border:0;
-  border-radius:9px;
-  padding:10px 14px;
+  border-radius:10px;
+  padding:11px 15px;
+  font-weight:700;
   cursor:pointer;
-  font-weight:700
 }
 
 .primary{
   background:var(--b);
-  color:#fff
+  color:#fff;
+}
+
+.primary:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+.loginbox .btn{
+  width:100%;
+  margin-top:10px;
+}
+
+.msg{
+  margin-top:12px;
+  font-size:13px;
+  min-height:20px;
+  word-break:break-word;
+}
+
+/* ADMIN */
+
+.app{
+  display:flex;
+  min-height:100vh;
 }
 
 .side{
   width:245px;
   background:linear-gradient(180deg,#062b65,#0b4d9c);
   color:#fff;
+  padding:18px 13px;
   position:fixed;
   inset:0 auto 0 0;
-  padding:20px 14px
 }
 
 .brand{
   text-align:center;
-  padding-bottom:22px;
-  border-bottom:1px solid #ffffff30
+  padding:8px 5px 22px;
+  border-bottom:1px solid #ffffff30;
+}
+
+.brand .logo{
+  width:64px;
+  height:64px;
+  background:#fff;
+  color:var(--b);
+  margin:auto;
 }
 
 .brand h2{
+  font-size:19px;
   margin:9px 0 2px;
-  font-size:20px
 }
 
 .brand small{
-  opacity:.8
+  opacity:.8;
 }
 
 .nav{
-  margin-top:18px
+  margin-top:18px;
 }
 
 .nav button{
@@ -109,149 +165,158 @@ body{
   background:transparent;
   color:#fff;
   text-align:left;
-  padding:12px 14px;
+  padding:12px 13px;
   margin:3px 0;
   border-radius:10px;
-  cursor:pointer
+  font-size:14px;
+  cursor:pointer;
 }
 
 .nav button.active,
 .nav button:hover{
-  background:#ffffff1c
+  background:#ffffff1c;
 }
 
 .main{
   margin-left:245px;
+  width:calc(100% - 245px);
   padding:22px;
-  min-height:100vh;
-  position:relative
+  position:relative;
 }
 
-.wm{
+.watermark{
   position:fixed;
   right:6%;
   bottom:8%;
-  font-size:75px;
+  font-size:80px;
   font-weight:900;
   color:#0b3b8208;
   transform:rotate(-12deg);
-  pointer-events:none
+  pointer-events:none;
 }
 
 .top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:20px
+  margin-bottom:20px;
 }
 
 .top h1{
   margin:0;
-  color:var(--b)
-}
-
-.clock,
-.card,
-.panel{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px
+  color:var(--b);
+  font-size:25px;
 }
 
 .clock{
+  background:#fff;
+  border:1px solid var(--line);
   padding:9px 13px;
-  font-size:13px
+  border-radius:10px;
+  font-size:13px;
 }
 
 .cards{
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  gap:12px
+  gap:12px;
 }
 
 .card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
   padding:16px;
-  box-shadow:0 4px 16px #0b3b8210
+  box-shadow:0 4px 16px #0b3b8210;
 }
 
 .card small{
   display:block;
   color:#6b7d92;
-  margin-top:5px
+  margin-top:7px;
 }
 
 .num{
   font-size:25px;
   font-weight:800;
   color:var(--b);
-  margin-top:8px
+  margin-top:7px;
 }
 
 .panel{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
   padding:18px;
   margin-top:18px;
-  box-shadow:0 4px 16px #0b3b820c
+  box-shadow:0 4px 16px #0b3b820c;
 }
 
 .panel h3{
   margin:0 0 15px;
-  color:var(--b)
+  color:var(--b);
 }
 
 .grid2{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:18px
+  gap:18px;
+}
+
+.tablewrap{
+  overflow:auto;
 }
 
 .table{
   width:100%;
-  border-collapse:collapse
+  border-collapse:collapse;
+  min-width:620px;
 }
 
 .table th,
 .table td{
-  padding:10px;
+  padding:11px 9px;
   border-bottom:1px solid #e8eef6;
   text-align:left;
-  font-size:13px
+  font-size:13px;
 }
 
 .table th{
   color:#53677f;
-  background:#f7faff
+  background:#f7faff;
 }
 
 .badge{
+  display:inline-block;
   padding:5px 9px;
   border-radius:999px;
   background:#eaf2ff;
   color:#1455a0;
   font-size:12px;
-  font-weight:700
+  font-weight:700;
 }
 
 .green{
   background:#e7f8ef;
-  color:#08733d
+  color:#08733d;
 }
 
 .red{
   background:#ffecef;
-  color:#b4233c
+  color:#b4233c;
 }
 
 .formgrid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px
+  grid-template-columns:1fr 1fr;
+  gap:14px;
 }
 
 .field label{
   display:block;
   font-size:12px;
   color:#60738a;
-  margin-bottom:6px
+  margin-bottom:6px;
 }
 
 .field input,
@@ -259,37 +324,14 @@ body{
   width:100%;
   padding:11px;
   border:1px solid #cddbea;
-  border-radius:9px
+  border-radius:9px;
 }
 
-.muted{
-  color:#708198
-}
-
-.rate-edit{
-  width:100px;
-  padding:8px;
-  border:1px solid #cbd9e8;
-  border-radius:8px
-}
-
-.rate-edit:focus{
-  outline:2px solid #9fc5f3
-}
-
-.edit-btn{
-  border:0;
-  border-radius:8px;
-  padding:8px 11px;
-  background:#0b3b82;
-  color:#fff;
-  font-weight:700;
-  cursor:pointer
-}
+/* MOBILE */
 
 @media(max-width:1050px){
   .cards{
-    grid-template-columns:repeat(3,1fr)
+    grid-template-columns:repeat(3,1fr);
   }
 }
 
@@ -297,99 +339,94 @@ body{
 
   .side{
     width:72px;
-    padding:12px 8px
+    padding:12px 8px;
   }
 
   .brand h2,
   .brand small,
-  .nav span{
-    display:none
+  .nav button span{
+    display:none;
+  }
+
+  .brand .logo{
+    width:48px;
+    height:48px;
+    font-size:19px;
   }
 
   .main{
     margin-left:72px;
-    padding:13px
+    width:calc(100% - 72px);
+    padding:13px;
   }
 
   .cards{
-    grid-template-columns:repeat(2,1fr)
+    grid-template-columns:repeat(2,1fr);
   }
 
   .grid2,
   .formgrid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
-  .table{
-    min-width:650px
-  }
-
-  .panel{
-    overflow:auto
+  .top h1{
+    font-size:19px;
   }
 }
 </style>
-
-<link rel="manifest" href="./manifest.json">
-
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
-
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="login" class="login">
+<!-- ================= LOGIN ================= -->
 
-  <div class="box">
+<div id="loginScreen" class="login">
+
+  <div class="loginbox">
 
     <div class="logo">DS</div>
 
-    <h2 style="color:#0b3b82">
-      Darshana Sethu
-    </h2>
+    <h2>Darshana Sethu</h2>
 
-    <div class="muted">
+    <div class="sub">
       Professional Admin Panel
     </div>
 
     <input
-      id="email"
+      id="adminEmail"
       type="email"
-      placeholder="Admin Email"
       autocomplete="username"
+      value="darshanasethu@gmail.com"
+      placeholder="Admin Email"
     >
 
     <input
-      id="password"
+      id="adminPassword"
       type="password"
-      placeholder="Password"
       autocomplete="current-password"
+      placeholder="Password"
     >
 
     <button
-      class="btn primary"
-      style="width:100%;margin-top:10px"
       id="loginBtn"
+      class="btn primary"
     >
       LOGIN
     </button>
 
-    <p id="msg" class="muted">
-      Secure Admin Login
-    </p>
+    <div
+      id="loginMsg"
+      class="msg"
+    ></div>
 
   </div>
 
 </div>
 
 
-<!-- ADMIN APP -->
-<div id="app" class="hide">
+<!-- ================= ADMIN APP ================= -->
+
+<div id="adminApp" class="app hidden">
 
   <aside class="side">
 
@@ -399,9 +436,7 @@ body{
         DS
       </div>
 
-      <h2>
-        Darshana Sethu
-      </h2>
+      <h2>Darshana Sethu</h2>
 
       <small>
         Admin Panel
@@ -455,22 +490,24 @@ body{
 
   <main class="main">
 
-    <div class="wm">
+    <div class="watermark">
       DARSHANA SETHU
     </div>
 
+
     <div class="top">
 
-      <h1 id="title">
+      <h1 id="pageTitle">
         Dashboard
       </h1>
 
-      <div class="clock" id="clock"></div>
+      <div id="clock" class="clock"></div>
 
     </div>
 
 
     <!-- DASHBOARD -->
+
     <section id="dashboard">
 
       <div class="cards">
@@ -478,37 +515,37 @@ body{
         <div class="card">
           🚕
           <small>Total Bookings</small>
-          <div class="num" id="bookings">0</div>
+          <div id="totalBookings" class="num">0</div>
         </div>
 
         <div class="card">
           🟢
           <small>Active Rides</small>
-          <div class="num" id="active">0</div>
+          <div id="activeRides" class="num">0</div>
         </div>
 
         <div class="card">
           ✅
           <small>Completed</small>
-          <div class="num" id="completed">0</div>
+          <div id="completedRides" class="num">0</div>
         </div>
 
         <div class="card">
           ⏳
           <small>Pending Drivers</small>
-          <div class="num" id="pending">0</div>
+          <div id="pendingDrivers" class="num">0</div>
         </div>
 
         <div class="card">
           👨‍✈️
           <small>Approved Drivers</small>
-          <div class="num" id="approved">0</div>
+          <div id="approvedDrivers" class="num">0</div>
         </div>
 
         <div class="card">
           💰
           <small>Commission</small>
-          <div class="num" id="commission">₹0</div>
+          <div id="commissionTotal" class="num">₹0</div>
         </div>
 
       </div>
@@ -522,30 +559,32 @@ body{
             Recent Bookings
           </h3>
 
-          <table class="table">
+          <div class="tablewrap">
 
-            <thead>
+            <table class="table">
 
-              <tr>
-                <th>Booking</th>
-                <th>Customer</th>
-                <th>Status</th>
-                <th>Fare</th>
-              </tr>
+              <thead>
+                <tr>
+                  <th>Booking</th>
+                  <th>Customer</th>
+                  <th>Status</th>
+                  <th>Fare</th>
+                </tr>
+              </thead>
 
-            </thead>
+              <tbody id="recentBookings">
 
-            <tbody id="recent">
+                <tr>
+                  <td colspan="4">
+                    No bookings yet.
+                  </td>
+                </tr>
 
-              <tr>
-                <td colspan="4">
-                  Waiting for data…
-                </td>
-              </tr>
+              </tbody>
 
-            </tbody>
+            </table>
 
-          </table>
+          </div>
 
         </div>
 
@@ -553,11 +592,11 @@ body{
         <div class="panel">
 
           <h3>
-            Ride Status
+            System Status
           </h3>
 
-          <p class="muted">
-            Live Firebase bookings will appear here.
+          <p id="systemStatus">
+            Firebase connected. Waiting for data…
           </p>
 
         </div>
@@ -568,116 +607,131 @@ body{
 
 
     <!-- DRIVERS -->
-    <section id="drivers" class="panel hide">
+
+    <section
+      id="drivers"
+      class="panel hidden"
+    >
 
       <h3>
-        Driver Approvals & Management
+        Driver Approvals
       </h3>
 
-      <table class="table">
+      <div class="tablewrap">
 
-        <thead>
+        <table class="table">
 
-          <tr>
-            <th>Driver</th>
-            <th>Vehicle</th>
-            <th>Seats</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
+          <thead>
 
-        </thead>
+            <tr>
+              <th>Driver</th>
+              <th>Vehicle</th>
+              <th>Seats</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
 
-        <tbody id="driversBody"></tbody>
+          </thead>
 
-      </table>
+          <tbody id="driversBody">
+
+            <tr>
+              <td colspan="5">
+                No applications yet.
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </section>
 
 
     <!-- LIVE RIDES -->
-    <section id="rides" class="panel hide">
+
+    <section
+      id="rides"
+      class="panel hidden"
+    >
 
       <h3>
         Live Rides
       </h3>
 
-      <table class="table">
+      <div class="tablewrap">
 
-        <thead>
+        <table class="table">
 
-          <tr>
-            <th>Booking</th>
-            <th>Customer</th>
-            <th>Driver</th>
-            <th>Pickup</th>
-            <th>Drop</th>
-            <th>Date/Time</th>
-            <th>KM</th>
-            <th>Status</th>
-          </tr>
+          <thead>
 
-        </thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Customer</th>
+              <th>Driver</th>
+              <th>Pickup</th>
+              <th>Drop</th>
+              <th>Date/Time</th>
+              <th>KM</th>
+              <th>Status</th>
+            </tr>
 
-        <tbody id="ridesBody"></tbody>
+          </thead>
 
-      </table>
+          <tbody id="ridesBody">
+
+            <tr>
+              <td colspan="8">
+                No live rides.
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </section>
 
 
     <!-- CUSTOMERS -->
-    <section id="customers" class="panel hide">
+
+    <section
+      id="customers"
+      class="panel hidden"
+    >
 
       <h3>
         Customers
       </h3>
 
-      <p class="muted">
-        Customer profiles and platform history will load from Firebase.
+      <p>
+        Customer profiles and booking history will appear here from Firebase.
       </p>
 
     </section>
 
 
     <!-- FARE -->
-    <section id="fare" class="panel hide">
+
+    <section
+      id="fare"
+      class="panel hidden"
+    >
 
       <h3>
         Fare & KM Settings
-
-        <span
-          style="float:right;font-size:12px;color:#60738a"
-        >
-          ✏️ Edit anytime
-        </span>
-
       </h3>
-
-
-      <div
-        style="margin:-4px 0 14px;padding:10px 12px;background:#fff7d6;border:1px solid #f5b400;border-radius:10px;font-size:12px"
-      >
-
-        <b>Important:</b>
-
-        After changing rates, tap
-
-        <b>
-          SAVE ALL FARE SETTINGS ✓
-        </b>.
-
-        Customer App will use these saved final rates.
-
-      </div>
-
 
       <div class="formgrid">
 
         <div class="field">
 
           <label>
-            Vehicle Category
+            Vehicle
           </label>
 
           <select id="vehicle">
@@ -713,7 +767,7 @@ body{
             Trip Type
           </label>
 
-          <select id="trip">
+          <select id="tripType">
 
             <option>
               One Way
@@ -731,15 +785,13 @@ body{
         <div class="field">
 
           <label>
-            Commission 0–65 KM (%)
+            Base Rate ₹
           </label>
 
           <input
-            id="commission0to65"
+            id="baseRate"
             type="number"
-            placeholder="Firebase value"
-            min="0"
-            step="0.1"
+            value="0"
           >
 
         </div>
@@ -748,15 +800,13 @@ body{
         <div class="field">
 
           <label>
-            Commission 66–191 KM (%)
+            Per KM Rate ₹
           </label>
 
           <input
-            id="commission66to191"
+            id="perKmRate"
             type="number"
-            placeholder="Firebase value"
-            min="0"
-            step="0.1"
+            value="0"
           >
 
         </div>
@@ -765,15 +815,13 @@ body{
         <div class="field">
 
           <label>
-            Commission 191+ KM (%)
+            Platform Commission %
           </label>
 
           <input
-            id="commission191plus"
+            id="platformCommission"
             type="number"
-            placeholder="Firebase value"
-            min="0"
-            step="0.1"
+            value="0"
           >
 
         </div>
@@ -795,233 +843,17 @@ body{
       </div>
 
 
-      <div
-        style="margin-top:14px;padding:11px 13px;background:#eef6ff;border:1px solid #b8d4f5;border-radius:10px;font-size:13px"
-      >
-
-        <b>Fare Base Rule:</b>
-
-        ≤25 KM → ₹450
-
-        &nbsp; | &nbsp;
-
-        &gt;25 KM → ₹300.
-
-        Values below are loaded from Firebase.
-
-      </div>
-
-
-      <div
-        style="margin-top:16px;padding:15px;border:1px solid #d8e3ef;border-radius:14px;background:#fff"
-      >
-
-        <h4 style="margin:0 0 12px">
-          🚕 Final Vehicle Rates — Edit
-        </h4>
-
-
-        <div class="grid2">
-
-
-          <!-- 4 SEATER -->
-          <div
-            style="padding:14px;border:1px solid #e5eaf1;border-radius:12px;background:#f9fbff"
-          >
-
-            <b>
-              4 Seater
-            </b>
-
-            <div
-              class="formgrid"
-              style="margin-top:10px"
-            >
-
-              <div class="field">
-
-                <label>
-                  Base ₹ — Up to 25 KM
-                </label>
-
-                <input
-                  id="fourBaseUnder25"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Base ₹ — Above 25 KM
-                </label>
-
-                <input
-                  id="fourBaseAbove25"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  One Way ₹ / KM
-                </label>
-
-                <input
-                  id="fourOneWay"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                  step="0.5"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Up & Down ₹ / KM
-                </label>
-
-                <input
-                  id="fourRound"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                  step="0.5"
-                >
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- 6 SEATER -->
-          <div
-            style="padding:14px;border:1px solid #e5eaf1;border-radius:12px;background:#f9fbff"
-          >
-
-            <b>
-              6 Seater
-            </b>
-
-            <div
-              class="formgrid"
-              style="margin-top:10px"
-            >
-
-              <div class="field">
-
-                <label>
-                  Base ₹ — Up to 25 KM
-                </label>
-
-                <input
-                  id="sixBaseUnder25"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Base ₹ — Above 25 KM
-                </label>
-
-                <input
-                  id="sixBaseAbove25"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  One Way ₹ / KM
-                </label>
-
-                <input
-                  id="sixOneWay"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                  step="0.5"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Up & Down ₹ / KM
-                </label>
-
-                <input
-                  id="sixRound"
-                  type="number"
-                  placeholder="Firebase value"
-                  min="0"
-                  step="0.5"
-                >
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div
-          style="margin-top:12px;padding:11px;background:#fff7d6;border:1px solid #f5b400;border-radius:10px;font-size:12px"
-        >
-
-          🛣️
-
-          <b>
-            Toll & Parking: EXTRA
-          </b>
-
-          — toll charges are not included in fare calculation.
-
-        </div>
-
-      </div>
-
-
-      <p style="margin-top:13px">
+      <p>
 
         <label>
 
-          📍 Pickup KM Calculation
-
           <input
-            id="pickupOn"
+            id="pickupKmEnabled"
             type="checkbox"
             checked
           >
+
+          Pickup KM calculation
 
         </label>
 
@@ -1032,13 +864,13 @@ body{
 
         <label>
 
-          🛣️ Trip KM Calculation
-
           <input
-            id="tripOn"
+            id="tripKmEnabled"
             type="checkbox"
             checked
           >
+
+          Trip KM calculation
 
         </label>
 
@@ -1046,22 +878,23 @@ body{
 
 
       <button
+        id="saveFareBtn"
         class="btn primary"
-        id="saveFare"
       >
-        SAVE ALL FARE SETTINGS
+        SAVE FARE SETTINGS
       </button>
 
-      <span
-        id="fareMsg"
-        class="muted"
-      ></span>
+      <span id="fareMsg"></span>
 
     </section>
 
 
     <!-- WALLET -->
-    <section id="wallet" class="panel hide">
+
+    <section
+      id="wallet"
+      class="panel hidden"
+    >
 
       <h3>
         Driver Wallet
@@ -1093,13 +926,17 @@ body{
 
 
     <!-- REVIEWS -->
-    <section id="reviews" class="panel hide">
+
+    <section
+      id="reviews"
+      class="panel hidden"
+    >
 
       <h3>
         Reviews & Ratings
       </h3>
 
-      <p class="muted">
+      <p>
         Customer → Driver and Driver → Customer reviews will appear here.
       </p>
 
@@ -1107,7 +944,11 @@ body{
 
 
     <!-- REPORTS -->
-    <section id="reports" class="panel hide">
+
+    <section
+      id="reports"
+      class="panel hidden"
+    >
 
       <h3>
         Reports & Analytics
@@ -1139,19 +980,23 @@ body{
 
 
     <!-- SETTINGS -->
-    <section id="settings" class="panel hide">
+
+    <section
+      id="settings"
+      class="panel hidden"
+    >
 
       <h3>
         Settings
       </h3>
 
-      <p class="muted">
-        Blue professional Admin Panel • Local-first • Cab + Auto • Unlimited KM range.
+      <p>
+        Blue professional Admin Panel • Cab + Auto • Unlimited KM range.
       </p>
 
       <button
+        id="logoutBtn"
         class="btn red"
-        id="logout"
       >
         LOGOUT
       </button>
@@ -1163,23 +1008,23 @@ body{
 </div>
 
 
+<!-- ================= FIREBASE ================= -->
+
 <script type="module">
 
 import {
   initializeApp
-}
-from
-'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
 import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut
-}
-from
-'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+  signOut,
+  setPersistence,
+  browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
 import {
@@ -1188,65 +1033,352 @@ import {
   onSnapshot,
   doc,
   updateDoc,
-  setDoc,
-  getDoc
-}
-from
-'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
+/* FIREBASE CONFIG */
 
-const cfg = {
+const firebaseConfig = {
 
   apiKey:
-  'AIzaSyCKKThIcHKI8jFvOmfXgQZ-UKXwNCiha_U',
+    "AIzaSyCKKThIcHKI8jFvOmfXgQZ-UKXwNCiha_U",
 
   authDomain:
-  'darshana-sethu-cab.firebaseapp.com',
+    "darshana-sethu-cab.firebaseapp.com",
 
   projectId:
-  'darshana-sethu-cab',
+    "darshana-sethu-cab",
 
   storageBucket:
-  'darshana-sethu-cab.firebasestorage.app',
+    "darshana-sethu-cab.firebasestorage.app",
 
   messagingSenderId:
-  '753735533400',
+    "753735533400",
 
   appId:
-  '1:753735533400:web:dd314c6e8b61d2f1b09b2d'
+    "1:753735533400:web:dd314c6e8b61d2f1b09b2d",
+
+  measurementId:
+    "G-E366CXE9LT"
 
 };
 
 
-const fb = initializeApp(cfg);
+/* INITIALIZE */
 
-const auth = getAuth(fb);
+const firebaseApp =
+  initializeApp(firebaseConfig);
 
-const db = getFirestore(fb);
+const auth =
+  getAuth(firebaseApp);
 
-const $ = id =>
-  document.getElementById(id);
+const db =
+  getFirestore(firebaseApp);
 
 
-/* =========================
-   ADMIN LOGIN
-   ONLY LOGIN ERROR HANDLING
-   UPDATED
-========================= */
+/* ELEMENTS */
 
-$('loginBtn').onclick = async () => {
+const loginScreen =
+  document.getElementById("loginScreen");
 
-  const email =
-    $('email').value.trim();
+const adminApp =
+  document.getElementById("adminApp");
 
-  const password =
-    $('password').value;
+const adminEmail =
+  document.getElementById("adminEmail");
 
-  if (!email) {
+const adminPassword =
+  document.getElementById("adminPassword");
 
-    $('msg').textContent =
-   
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const loginMsg =
+  document.getElementById("loginMsg");
+
+
+/* KEEP LOGIN ACTIVE */
+
+setPersistence(
+  auth,
+  browserLocalPersistence
+).catch(error => {
+
+  console.error(
+    "Persistence error:",
+    error
+  );
+
+});
+
+
+/* LOGIN */
+
+loginBtn.addEventListener(
+  "click",
+  async () => {
+
+    const email =
+      adminEmail.value.trim();
+
+    const password =
+      adminPassword.value;
+
+    loginMsg.textContent = "";
+
+    loginMsg.style.color =
+      "#b4233c";
+
+
+    if (!email) {
+
+      loginMsg.textContent =
+        "Admin email enter చేయండి.";
+
+      return;
+
+    }
+
+
+    if (!password) {
+
+      loginMsg.textContent =
+        "Password enter చేయండి.";
+
+      return;
+
+    }
+
+
+    loginBtn.disabled = true;
+
+    loginBtn.textContent =
+      "LOGGING IN…";
+
+
+    try {
+
+      await setPersistence(
+        auth,
+        browserLocalPersistence
+      );
+
+
+      const result =
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+
+      console.log(
+        "LOGIN SUCCESS:",
+        result.user.email
+      );
+
+
+      loginMsg.style.color =
+        "#08733d";
+
+      loginMsg.textContent =
+        "Login successful…";
+
+
+    } catch (error) {
+
+      console.error(
+        "LOGIN ERROR:",
+        error
+      );
+
+
+      loginMsg.style.color =
+        "#b4233c";
+
+
+      let message =
+        error.code ||
+        error.message ||
+        "Unknown error";
+
+
+      if (
+        error.code ===
+        "auth/invalid-credential"
+      ) {
+
+        message =
+          "Invalid email or password.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/user-not-found"
+      ) {
+
+        message =
+          "Admin user not found in Firebase.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/wrong-password"
+      ) {
+
+        message =
+          "Wrong password.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/invalid-email"
+      ) {
+
+        message =
+          "Invalid email address.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/operation-not-allowed"
+      ) {
+
+        message =
+          "Firebase Email/Password login is not enabled.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/network-request-failed"
+      ) {
+
+        message =
+          "Network connection failed.";
+
+      }
+
+
+      loginMsg.textContent =
+        "Login failed: " + message;
+
+
+    } finally {
+
+      loginBtn.disabled = false;
+
+      loginBtn.textContent =
+        "LOGIN";
+
+    }
+
+  }
+);
+
+
+/* LOGOUT */
+
+document
+  .getElementById("logoutBtn")
+  .addEventListener(
+    "click",
+    async () => {
+
+      try {
+
+        await signOut(auth);
+
+      } catch(error) {
+
+        console.error(
+          "Logout error:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+
+/* NAVIGATION */
+
+document
+  .querySelectorAll(".nav button")
+  .forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll(
+            "main section"
+          )
+          .forEach(section => {
+
+            section.classList.add(
+              "hidden"
+            );
+
+          });
+
+
+        const page =
+          document.getElementById(
+            btn.dataset.page
+          );
+
+
+        if(page){
+
+          page.classList.remove(
+            "hidden"
+          );
+
+        }
+
+
+        document
+          .querySelectorAll(
+            ".nav button"
+          )
+          .forEach(button => {
+
+            button.classList.remove(
+              "active"
+            );
+
+          });
+
+
+        btn.classList.add(
+          "active"
+        );
+
+
+        document.getElementById(
+          "pageTitle"
+        ).textContent =
+          btn.innerText
+            .replace(
+              /[^\w\s&]/g,
+              ""
+            )
+            .trim();
+
+      }
+    );
+
+  });
+
+
+/* AUTH STATE */
+
+onAuth
