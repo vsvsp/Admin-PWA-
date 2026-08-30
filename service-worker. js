@@ -1,6 +1,6 @@
-const CACHE_NAME = "darshana-sethu-admin-v3";
+const CACHE_NAME = "ds-admin-pwa-v5";
 
-const APP_FILES = [
+const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.json",
@@ -8,30 +8,35 @@ const APP_FILES = [
   "./icons/icon-512.png"
 ];
 
-// Install
-self.addEventListener("install", event => {
+self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_FILES))
-      .then(() => self.skipWaiting())
+      .then(function (cache) {
+        return cache.addAll(APP_SHELL);
+      })
+      .then(function () {
+        return self.skipWaiting();
+      })
   );
 });
 
-// Activate
-self.addEventListener("activate", event => {
+self.addEventListener("activate", function (event) {
   event.waitUntil(
-    caches.keys().then(keys => {
+    caches.keys().then(function (cacheNames) {
       return Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
+        cacheNames.map(function (cacheName) {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
       );
-    }).then(() => self.clients.claim())
+    }).then(function () {
+      return self.clients.claim();
+    })
   );
 });
 
-// Fetch
-self.addEventListener("fetch", event => {
+self.addEventListener("fetch", function (event) {
 
   if (event.request.method !== "GET") {
     return;
@@ -39,20 +44,19 @@ self.addEventListener("fetch", event => {
 
   event.respondWith(
     fetch(event.request)
-      .then(response => {
+      .then(function (response) {
 
-        // Save successful response
-        const copy = response.clone();
+        if (response && response.status === 200) {
+          const responseClone = response.clone();
 
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, copy);
-        });
+          caches.open(CACHE_NAME).then(function (cache) {
+            cache.put(event.request, responseClone);
+          });
+        }
 
         return response;
       })
-      .catch(() => {
-
-        // Offline → cache
+      .catch(function () {
         return caches.match(event.request);
       })
   );
