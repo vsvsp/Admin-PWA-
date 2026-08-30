@@ -7,18 +7,6 @@
 
 <title>Darshana Sethu Admin — Fare Rates v4</title>
 
-<!-- PWA -->
-<link rel="manifest" href="./manifest.json">
-
-<!-- ICON FIX -->
-<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
-<link rel="shortcut icon" type="image/png" href="./icon-192.png">
-<link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
-
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
 <style>
 *{box-sizing:border-box}
 
@@ -35,9 +23,7 @@ body{
   --line:#d9e4f2
 }
 
-.hide{
-  display:none!important
-}
+.hide{display:none!important}
 
 .login{
   min-height:100vh;
@@ -343,6 +329,15 @@ body{
   }
 }
 </style>
+
+<link rel="manifest" href="./manifest.json">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+
 </head>
 
 <body>
@@ -366,12 +361,14 @@ body{
       id="email"
       type="email"
       placeholder="Admin Email"
+      autocomplete="username"
     >
 
     <input
       id="password"
       type="password"
       placeholder="Password"
+      autocomplete="current-password"
     >
 
     <button
@@ -394,7 +391,6 @@ body{
 <!-- ADMIN APP -->
 <div id="app" class="hide">
 
-  <!-- SIDE MENU -->
   <aside class="side">
 
     <div class="brand">
@@ -416,10 +412,7 @@ body{
 
     <div class="nav">
 
-      <button
-        class="active"
-        data-page="dashboard"
-      >
+      <button class="active" data-page="dashboard">
         📊 <span>Dashboard</span>
       </button>
 
@@ -460,13 +453,11 @@ body{
   </aside>
 
 
-  <!-- MAIN -->
   <main class="main">
 
     <div class="wm">
       DARSHANA SETHU
     </div>
-
 
     <div class="top">
 
@@ -474,10 +465,7 @@ body{
         Dashboard
       </h1>
 
-      <div
-        class="clock"
-        id="clock"
-      ></div>
+      <div class="clock" id="clock"></div>
 
     </div>
 
@@ -490,72 +478,37 @@ body{
         <div class="card">
           🚕
           <small>Total Bookings</small>
-          <div
-            class="num"
-            id="bookings"
-          >
-            0
-          </div>
+          <div class="num" id="bookings">0</div>
         </div>
-
 
         <div class="card">
           🟢
           <small>Active Rides</small>
-          <div
-            class="num"
-            id="active"
-          >
-            0
-          </div>
+          <div class="num" id="active">0</div>
         </div>
-
 
         <div class="card">
           ✅
           <small>Completed</small>
-          <div
-            class="num"
-            id="completed"
-          >
-            0
-          </div>
+          <div class="num" id="completed">0</div>
         </div>
-
 
         <div class="card">
           ⏳
           <small>Pending Drivers</small>
-          <div
-            class="num"
-            id="pending"
-          >
-            0
-          </div>
+          <div class="num" id="pending">0</div>
         </div>
-
 
         <div class="card">
           👨‍✈️
           <small>Approved Drivers</small>
-          <div
-            class="num"
-            id="approved"
-          >
-            0
-          </div>
+          <div class="num" id="approved">0</div>
         </div>
-
 
         <div class="card">
           💰
           <small>Commission</small>
-          <div
-            class="num"
-            id="commission"
-          >
-            ₹0
-          </div>
+          <div class="num" id="commission">₹0</div>
         </div>
 
       </div>
@@ -615,10 +568,7 @@ body{
 
 
     <!-- DRIVERS -->
-    <section
-      id="drivers"
-      class="panel hide"
-    >
+    <section id="drivers" class="panel hide">
 
       <h3>
         Driver Approvals & Management
@@ -646,10 +596,7 @@ body{
 
 
     <!-- LIVE RIDES -->
-    <section
-      id="rides"
-      class="panel hide"
-    >
+    <section id="rides" class="panel hide">
 
       <h3>
         Live Rides
@@ -680,10 +627,7 @@ body{
 
 
     <!-- CUSTOMERS -->
-    <section
-      id="customers"
-      class="panel hide"
-    >
+    <section id="customers" class="panel hide">
 
       <h3>
         Customers
@@ -697,10 +641,7 @@ body{
 
 
     <!-- FARE -->
-    <section
-      id="fare"
-      class="panel hide"
-    >
+    <section id="fare" class="panel hide">
 
       <h3>
         Fare & KM Settings
@@ -715,19 +656,16 @@ body{
 
 
       <div
-        style="
-        margin:-4px 0 14px;
-        padding:10px 12px;
-        background:#fff7d6;
-        border:1px solid #f5b400;
-        border-radius:10px;
-        font-size:12px"
+        style="margin:-4px 0 14px;padding:10px 12px;background:#fff7d6;border:1px solid #f5b400;border-radius:10px;font-size:12px"
       >
 
         <b>Important:</b>
 
         After changing rates, tap
-        <b>SAVE ALL FARE SETTINGS ✓</b>.
+
+        <b>
+          SAVE ALL FARE SETTINGS ✓
+        </b>.
 
         Customer App will use these saved final rates.
 
@@ -857,15 +795,8 @@ body{
       </div>
 
 
-      <!-- BASIC RATE -->
       <div
-        style="
-        margin-top:14px;
-        padding:11px 13px;
-        background:#eef6ff;
-        border:1px solid #b8d4f5;
-        border-radius:10px;
-        font-size:13px"
+        style="margin-top:14px;padding:11px 13px;background:#eef6ff;border:1px solid #b8d4f5;border-radius:10px;font-size:13px"
       >
 
         <b>Fare Base Rule:</b>
@@ -881,14 +812,8 @@ body{
       </div>
 
 
-      <!-- VEHICLE RATES -->
       <div
-        style="
-        margin-top:16px;
-        padding:15px;
-        border:1px solid #d8e3ef;
-        border-radius:14px;
-        background:#fff"
+        style="margin-top:16px;padding:15px;border:1px solid #d8e3ef;border-radius:14px;background:#fff"
       >
 
         <h4 style="margin:0 0 12px">
@@ -901,17 +826,12 @@ body{
 
           <!-- 4 SEATER -->
           <div
-            style="
-            padding:14px;
-            border:1px solid #e5eaf1;
-            border-radius:12px;
-            background:#f9fbff"
+            style="padding:14px;border:1px solid #e5eaf1;border-radius:12px;background:#f9fbff"
           >
 
             <b>
               4 Seater
             </b>
-
 
             <div
               class="formgrid"
@@ -990,17 +910,12 @@ body{
 
           <!-- 6 SEATER -->
           <div
-            style="
-            padding:14px;
-            border:1px solid #e5eaf1;
-            border-radius:12px;
-            background:#f9fbff"
+            style="padding:14px;border:1px solid #e5eaf1;border-radius:12px;background:#f9fbff"
           >
 
             <b>
               6 Seater
             </b>
-
 
             <div
               class="formgrid"
@@ -1080,16 +995,14 @@ body{
 
 
         <div
-          style="
-          margin-top:12px;
-          padding:11px;
-          background:#fff7d6;
-          border:1px solid #f5b400;
-          border-radius:10px;
-          font-size:12px"
+          style="margin-top:12px;padding:11px;background:#fff7d6;border:1px solid #f5b400;border-radius:10px;font-size:12px"
         >
 
-          🛣️ <b>Toll & Parking: EXTRA</b>
+          🛣️
+
+          <b>
+            Toll & Parking: EXTRA
+          </b>
 
           — toll charges are not included in fare calculation.
 
@@ -1139,7 +1052,6 @@ body{
         SAVE ALL FARE SETTINGS
       </button>
 
-
       <span
         id="fareMsg"
         class="muted"
@@ -1149,10 +1061,7 @@ body{
 
 
     <!-- WALLET -->
-    <section
-      id="wallet"
-      class="panel hide"
-    >
+    <section id="wallet" class="panel hide">
 
       <h3>
         Driver Wallet
@@ -1162,34 +1071,20 @@ body{
 
         <div class="card">
           🎁
-          <small>
-            Welcome Reward
-          </small>
-          <div class="num">
-            ₹100
-          </div>
+          <small>Welcome Reward</small>
+          <div class="num">₹100</div>
         </div>
-
 
         <div class="card">
           💵
-          <small>
-            Driver Earnings
-          </small>
-          <div class="num">
-            ₹0
-          </div>
+          <small>Driver Earnings</small>
+          <div class="num">₹0</div>
         </div>
-
 
         <div class="card">
           💰
-          <small>
-            Platform Commission
-          </small>
-          <div class="num">
-            ₹0
-          </div>
+          <small>Platform Commission</small>
+          <div class="num">₹0</div>
         </div>
 
       </div>
@@ -1198,10 +1093,7 @@ body{
 
 
     <!-- REVIEWS -->
-    <section
-      id="reviews"
-      class="panel hide"
-    >
+    <section id="reviews" class="panel hide">
 
       <h3>
         Reviews & Ratings
@@ -1215,10 +1107,7 @@ body{
 
 
     <!-- REPORTS -->
-    <section
-      id="reports"
-      class="panel hide"
-    >
+    <section id="reports" class="panel hide">
 
       <h3>
         Reports & Analytics
@@ -1228,34 +1117,20 @@ body{
 
         <div class="card">
           📅
-          <small>
-            Today
-          </small>
-          <div class="num">
-            0
-          </div>
+          <small>Today</small>
+          <div class="num">0</div>
         </div>
-
 
         <div class="card">
           📈
-          <small>
-            This Month
-          </small>
-          <div class="num">
-            0
-          </div>
+          <small>This Month</small>
+          <div class="num">0</div>
         </div>
-
 
         <div class="card">
           🛣️
-          <small>
-            Average Trip KM
-          </small>
-          <div class="num">
-            0
-          </div>
+          <small>Average Trip KM</small>
+          <div class="num">0</div>
         </div>
 
       </div>
@@ -1264,10 +1139,7 @@ body{
 
 
     <!-- SETTINGS -->
-    <section
-      id="settings"
-      class="panel hide"
-    >
+    <section id="settings" class="panel hide">
 
       <h3>
         Settings
@@ -1284,4 +1156,97 @@ body{
         LOGOUT
       </button>
 
-  
+    </section>
+
+  </main>
+
+</div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+}
+from
+'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut
+}
+from
+'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+
+
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  doc,
+  updateDoc,
+  setDoc,
+  getDoc
+}
+from
+'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const cfg = {
+
+  apiKey:
+  'AIzaSyCKKThIcHKI8jFvOmfXgQZ-UKXwNCiha_U',
+
+  authDomain:
+  'darshana-sethu-cab.firebaseapp.com',
+
+  projectId:
+  'darshana-sethu-cab',
+
+  storageBucket:
+  'darshana-sethu-cab.firebasestorage.app',
+
+  messagingSenderId:
+  '753735533400',
+
+  appId:
+  '1:753735533400:web:dd314c6e8b61d2f1b09b2d'
+
+};
+
+
+const fb = initializeApp(cfg);
+
+const auth = getAuth(fb);
+
+const db = getFirestore(fb);
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* =========================
+   ADMIN LOGIN
+   ONLY LOGIN ERROR HANDLING
+   UPDATED
+========================= */
+
+$('loginBtn').onclick = async () => {
+
+  const email =
+    $('email').value.trim();
+
+  const password =
+    $('password').value;
+
+  if (!email) {
+
+    $('msg').textContent =
+   
