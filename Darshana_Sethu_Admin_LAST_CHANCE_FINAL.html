@@ -1,0 +1,615 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b3b82">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Darshana Sethu Admin — Fare Rates v4</title><style>*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#10233f}:root{--b:#0b3b82;--b2:#1769c2;--line:#d9e4f2}.hide{display:none!important}.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#062b65,#1970c8)}.box{width:min(420px,92%);background:#fff;border-radius:20px;padding:30px;text-align:center;box-shadow:0 20px 60px #001d4c55}.logo{width:70px;height:70px;border-radius:50%;background:#fff;color:var(--b);display:grid;place-items:center;margin:auto;font-weight:800;font-size:25px}.box input{width:100%;padding:13px;margin:7px 0;border:1px solid #ccd9e8;border-radius:10px}.btn{border:0;border-radius:9px;padding:10px 14px;cursor:pointer;font-weight:700}.primary{background:var(--b);color:#fff}.side{width:245px;background:linear-gradient(180deg,#062b65,#0b4d9c);color:#fff;position:fixed;inset:0 auto 0 0;padding:20px 14px}.brand{text-align:center;padding-bottom:22px;border-bottom:1px solid #ffffff30}.brand h2{margin:9px 0 2px;font-size:20px}.brand small{opacity:.8}.nav{margin-top:18px}.nav button{width:100%;border:0;background:transparent;color:#fff;text-align:left;padding:12px 14px;margin:3px 0;border-radius:10px;cursor:pointer}.nav button.active,.nav button:hover{background:#ffffff1c}.main{margin-left:245px;padding:22px;min-height:100vh;position:relative}.wm{position:fixed;right:6%;bottom:8%;font-size:75px;font-weight:900;color:#0b3b8208;transform:rotate(-12deg);pointer-events:none}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.top h1{margin:0;color:var(--b)}.clock,.card,.panel{background:#fff;border:1px solid var(--line);border-radius:14px}.clock{padding:9px 13px;font-size:13px}.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.card{padding:16px;box-shadow:0 4px 16px #0b3b8210}.card small{display:block;color:#6b7d92;margin-top:5px}.num{font-size:25px;font-weight:800;color:var(--b);margin-top:8px}.panel{padding:18px;margin-top:18px;box-shadow:0 4px 16px #0b3b820c}.panel h3{margin:0 0 15px;color:var(--b)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:10px;border-bottom:1px solid #e8eef6;text-align:left;font-size:13px}.table th{color:#53677f;background:#f7faff}.badge{padding:5px 9px;border-radius:999px;background:#eaf2ff;color:#1455a0;font-size:12px;font-weight:700}.green{background:#e7f8ef;color:#08733d}.red{background:#ffecef;color:#b4233c}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.field label{display:block;font-size:12px;color:#60738a;margin-bottom:6px}.field input,.field select{width:100%;padding:11px;border:1px solid #cddbea;border-radius:9px}.muted{color:#708198}@media(max-width:1050px){.cards{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.side{width:72px;padding:12px 8px}.brand h2,.brand small,.nav span{display:none}.main{margin-left:72px;padding:13px}.cards{grid-template-columns:repeat(2,1fr)}.grid2,.formgrid{grid-template-columns:1fr}.table{min-width:650px}.panel{overflow:auto}}
+.rate-edit{width:100px;padding:8px;border:1px solid #cbd9e8;border-radius:8px}
+.rate-edit:focus{outline:2px solid #9fc5f3}
+.edit-btn{border:0;border-radius:8px;padding:8px 11px;background:#0b3b82;color:#fff;font-weight:700;cursor:pointer}
+</style></head><body>
+<div id="login" class="login"><div class="box"><div class="logo">DS</div><h2 style="color:#0b3b82">Darshana Sethu</h2><div class="muted">Professional Admin Panel</div><input id="email" type="email" placeholder="Admin Email"><input id="password" type="password" autocomplete="current-password" placeholder="Password">
+<button class="btn primary" style="width:100%;margin-top:10px" id="loginBtn">LOGIN</button>
+<button type="button" id="resetBtn" class="btn" style="width:100%;margin-top:8px;background:#eef4fb;color:#0b3b82">RESET PASSWORD</button>
+<p id="msg" class="muted">Secure Admin Login</p></div></div>
+
+<div id="editDriverModal" class="hide" style="position:fixed;inset:0;background:#0008;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px">
+<div style="background:#fff;border-radius:18px;width:min(560px,96vw);max-height:92vh;overflow:auto;padding:22px;box-shadow:0 20px 70px #0006">
+<h2 style="margin:0 0 16px;color:#0b3b82">✏️ Edit Driver</h2>
+<div class="formgrid">
+<div class="field"><label>Driver Name</label><input id="edName"></div>
+<div class="field"><label>Phone Number</label><input id="edPhone" inputmode="numeric"></div>
+<div class="field"><label>Vehicle Category</label><select id="edCategory"><option>Cab</option><option>Auto</option></select></div>
+<div class="field"><label>Car Type</label><input id="edCarType"></div>
+<div class="field"><label>Seating Capacity</label><input id="edSeats" type="number"></div>
+<div class="field"><label>Vehicle Number</label><input id="edVehicleNumber"></div>
+</div>
+<div style="display:flex;gap:10px;margin-top:18px"><button class="btn" id="edCancel" style="flex:1;background:#eee">CANCEL</button><button class="btn primary" id="edSave" style="flex:1">SAVE CHANGES</button></div>
+<div id="edMsg" class="muted" style="margin-top:10px"></div>
+</div></div>
+<div id="app" class="hide"><aside class="side"><div class="brand"><div class="logo">DS</div><h2>Darshana Sethu</h2><small>Admin Panel</small></div><div class="nav"><button class="active" data-page="dashboard">📊 <span>Dashboard</span></button><button data-page="drivers">👨‍✈️ <span>Drivers</span></button><button data-page="rides">🚕 <span>Live Rides</span></button><button data-page="customers">👤 <span>Customers</span></button><button data-page="fare">📏 <span>Fare & KM</span></button><button data-page="wallet">💰 <span>Wallet</span></button><button data-page="reviews">⭐ <span>Reviews</span></button><button data-page="reports">📈 <span>Reports</span></button><button data-page="donations">🙏 <span>Donations</span></button><button data-page="settings">⚙️ <span>Settings</span></button></div></aside><main class="main"><div class="wm">DARSHANA SETHU</div><div class="top"><h1 id="title">Dashboard</h1><div class="clock" id="clock"></div></div>
+<section id="dashboard"><div class="cards"><div class="card">🚕<small>Total Bookings</small><div class="num" id="bookings">0</div></div><div class="card">🟢<small>Active Rides</small><div class="num" id="active">0</div></div><div class="card">✅<small>Completed</small><div class="num" id="completed">0</div></div><div class="card">⏳<small>Pending Drivers</small><div class="num" id="pending">0</div></div><div class="card">👨‍✈️<small>Approved Drivers</small><div class="num" id="approved">0</div></div><div class="card">💰<small>Commission</small><div class="num" id="commission">₹0</div></div></div><div class="grid2"><div class="panel"><h3>Recent Bookings</h3><table class="table"><thead><tr><th>Booking</th><th>Customer</th><th>Status</th><th>Fare</th></tr></thead><tbody id="recent"><tr><td colspan="4">Waiting for data…</td></tr></tbody></table></div><div class="panel"><h3>Ride Status</h3><p class="muted">Live Firebase bookings will appear here.</p></div></div></section>
+<section id="drivers" class="panel hide"><h3>Driver Approvals & Management</h3><table class="table"><thead><tr><th>Driver</th><th>Vehicle</th><th>Seats</th><th>Status</th><th>Action</th></tr></thead><tbody id="driversBody"></tbody></table></section>
+<section id="rides" class="panel hide"><h3>Live Rides</h3><table class="table"><thead><tr><th>Booking</th><th>Customer</th><th>Driver</th><th>Pickup</th><th>Drop</th><th>Date/Time</th><th>KM</th><th>Status</th></tr></thead><tbody id="ridesBody"></tbody></table></section>
+<section id="customers" class="panel hide"><h3>Customers</h3><p class="muted">Customer profiles and platform history will load from Firebase.</p></section>
+<section id="fare" class="panel hide">
+<h3>Fare & KM Settings <span style="float:right;font-size:12px;color:#60738a">✏️ Edit anytime</span></h3>
+<div style="margin:-4px 0 14px;padding:10px 12px;background:#fff7d6;border:1px solid #f5b400;border-radius:10px;font-size:12px">
+<b>Important:</b> After changing rates, tap <b>SAVE ALL FARE SETTINGS ✓</b>. Customer App will use these saved final rates.
+</div>
+
+<div class="formgrid">
+  <div class="field"><label>Vehicle Category</label>
+    <select id="vehicle"><option>Dzire / Sedan</option><option>Ertiga / MUV</option><option>Innova / SUV</option><option>Traveller</option><option>Auto</option></select>
+  </div>
+  <div class="field"><label>Trip Type</label>
+    <select id="trip"><option>One Way</option><option>Up & Down</option></select>
+  </div>
+  <div class="field"><label>Commission 0–65 KM (%)</label><input id="commission0to65" type="number" placeholder="Firebase value" min="0" step="0.1"></div>
+  <div class="field"><label>Commission 66–191 KM (%)</label><input id="commission66to191" type="number" placeholder="Firebase value" min="0" step="0.1"></div>
+  <div class="field"><label>Commission 191+ KM (%)</label><input id="commission191plus" type="number" placeholder="Firebase value" min="0" step="0.1"></div>
+  <div class="field"><label>Maximum KM Range</label><input value="No Limit" disabled></div>
+</div>
+
+
+
+<div style="margin-top:14px;padding:11px 13px;background:#eef6ff;border:1px solid #b8d4f5;border-radius:10px;font-size:13px"><b>Fare Base Rule:</b> ≤25 KM → ₹450 &nbsp; | &nbsp; &gt;25 KM → ₹300. Values below are loaded from Firebase.</div><div style="margin-top:16px;padding:15px;border:1px solid #d8e3ef;border-radius:14px;background:#fff">
+  <h4 style="margin:0 0 12px">🚕 Final Vehicle Rates — Edit</h4>
+  <div class="grid2">
+    <div style="padding:14px;border:1px solid #e5eaf1;border-radius:12px;background:#f9fbff">
+      <b>4 Seater</b>
+      <div class="formgrid" style="margin-top:10px">
+        <div class="field"><label>Base ₹ — Up to 25 KM</label><input id="fourBaseUnder25" type="number" placeholder="Firebase value" min="0"></div>
+        <div class="field"><label>Base ₹ — Above 25 KM</label><input id="fourBaseAbove25" type="number" placeholder="Firebase value" min="0"></div><div class="field"><label>One Way ₹ / KM</label><input id="fourOneWay" type="number" placeholder="Firebase value" min="0" step="0.5"></div>
+        <div class="field"><label>Up & Down ₹ / KM</label><input id="fourRound" type="number" value="15.5" min="0" step="0.5"></div>
+      </div>
+    </div>
+    <div style="padding:14px;border:1px solid #e5eaf1;border-radius:12px;background:#f9fbff">
+      <b>6 Seater</b>
+      <div class="formgrid" style="margin-top:10px">
+        <div class="field"><label>Base ₹ — Up to 25 KM</label><input id="sixBaseUnder25" type="number" placeholder="Firebase value" min="0"></div>
+        <div class="field"><label>Base ₹ — Above 25 KM</label><input id="sixBaseAbove25" type="number" placeholder="Firebase value" min="0"></div><div class="field"><label>One Way ₹ / KM</label><input id="sixOneWay" type="number" placeholder="Firebase value" min="0" step="0.5"></div>
+        <div class="field"><label>Up & Down ₹ / KM</label><input id="sixRound" type="number" value="20" min="0" step="0.5"></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:11px;background:#fff7d6;border:1px solid #f5b400;border-radius:10px;font-size:12px">
+    🛣️ <b>Toll & Parking: EXTRA</b> — toll charges are not included in fare calculation.
+  </div>
+</div>
+
+
+
+<p style="margin-top:13px">
+<label>📍 Pickup KM Calculation <input id="pickupOn" type="checkbox" checked></label>
+</p>
+<p><label>🛣️ Trip KM Calculation <input id="tripOn" type="checkbox" checked></label></p>
+
+<button class="btn primary" id="saveFare">SAVE ALL FARE SETTINGS</button>
+<span id="fareMsg" class="muted"></span>
+</section>
+<section id="wallet" class="panel hide">
+<h3>💰 Darshana Sethu Wallet Management</h3>
+<div class="cards">
+  <div class="card">🏦<small>System Wallet — Commission</small><div class="num" id="systemWalletBalance">₹0</div></div>
+  <div class="card">👨‍✈️<small>Total Driver Wallet</small><div class="num" id="totalDriverWallet">₹0</div></div>
+  <div class="card">⏳<small>Pending Recharge</small><div class="num" id="pendingRecharge">₹0</div></div>
+  <div class="card">📜<small>Wallet Transactions</small><div class="num" id="walletTxnCount">0</div></div>
+</div>
+
+<div class="panel" style="margin-top:18px">
+  <h3>📲 Wallet Recharge / Adjustment</h3>
+  <div style="padding:12px;background:#fff7d6;border:1px solid #f5b400;border-radius:10px;font-size:13px;margin-bottom:14px">
+    <b>Important:</b> QR/UPI payment is verified by Admin. After you see the payment in your bank/UPI, use Credit. Do not credit an unverified payment.
+  </div>
+  <div class="formgrid">
+    <div class="field"><label>Driver</label><select id="walletDriver"><option value="">Select driver</option></select></div>
+    <div class="field"><label>Amount ₹</label><input id="walletAmount" type="number" min="0" step="1" placeholder="e.g. 500"></div>
+    <div class="field"><label>Action</label><select id="walletAction"><option value="credit">Credit (+)</option><option value="debit">Debit (−)</option></select></div>
+    <div class="field"><label>Reason</label><input id="walletReason" placeholder="Recharge / Correction / Other"></div>
+  </div>
+  <button class="btn primary" id="applyWalletAdjustment" style="margin-top:14px">SAVE WALLET ADJUSTMENT</button>
+  <span id="walletMsg" class="muted" style="margin-left:10px"></span>
+</div>
+
+<div class="panel" style="margin-top:18px">
+  <h3>📱 Driver Payment Request</h3>
+  <p class="muted">Driver scans the Darshana Sethu QR, pays, then sends the payment message on WhatsApp. Admin checks the actual payment and credits the wallet above.</p>
+  <div class="formgrid">
+    <div class="field"><label>Admin WhatsApp Number (country code)</label><input id="walletWhatsapp" placeholder="91XXXXXXXXXX"></div>
+    <div class="field"><label>UPI ID</label><input id="walletUpiId" placeholder="Your UPI ID"></div>
+  </div>
+  <button class="btn primary" id="saveWalletSettings" style="margin-top:14px">SAVE WALLET SETTINGS</button>
+  <span id="walletSettingsMsg" class="muted" style="margin-left:10px"></span>
+</div>
+
+<div class="panel" style="margin-top:18px">
+  <h3>👨‍✈️ Driver Wallet Balances</h3>
+  <div style="overflow:auto">
+    <table class="table">
+      <thead><tr><th>Driver</th><th>Phone</th><th>Wallet</th><th>Status</th></tr></thead>
+      <tbody id="walletDriversBody"><tr><td colspan="4">Waiting for Firebase data…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel" style="margin-top:18px">
+  <h3>📜 Wallet Transactions</h3>
+  <div style="overflow:auto">
+    <table class="table">
+      <thead><tr><th>Date</th><th>Driver</th><th>Type</th><th>Amount</th><th>Reason</th><th>Source</th></tr></thead>
+      <tbody id="walletTransactionsBody"><tr><td colspan="6">Waiting for Firebase data…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+</section><section id="reviews" class="panel hide"><h3>Reviews & Ratings</h3><p class="muted">Customer → Driver and Driver → Customer reviews will appear here.</p></section><section id="reports" class="panel hide"><h3>Reports & Analytics</h3><div class="cards"><div class="card">📅<small>Today</small><div class="num">0</div></div><div class="card">📈<small>This Month</small><div class="num">0</div></div><div class="card">🛣️<small>Average Trip KM</small><div class="num">0</div></div></div></section><section id="donations" class="panel hide">
+<h3>🙏 Donations</h3>
+<div class="cards">
+<div class="card">🛕<small>TTD Annadanam</small><div class="num" id="ttdDonationTotal">₹0</div><small>₹1 per completed trip</small></div>
+<div class="card">🛕<small>Mahakaleshwar Swamy – Rajahmundry</small><div class="num" id="mahakaleshwarDonationTotal">₹0</div><small>₹1 per completed trip</small></div>
+<div class="card">🙏<small>Total Donations</small><div class="num" id="totalDonationTotal">₹0</div><small>₹2 per completed trip</small></div>
+<div class="card">✅<small>Completed Donation Trips</small><div class="num" id="donationTripCount">0</div></div>
+</div>
+<div class="panel" style="margin-top:18px">
+<h3>Donation Transactions</h3>
+<div style="overflow:auto">
+<table class="table">
+<thead><tr><th>Booking ID</th><th>Driver</th><th>Trip Fare</th><th>TTD</th><th>Mahakaleshwar</th><th>Date</th></tr></thead>
+<tbody id="donationTransactionsBody"><tr><td colspan="6">Waiting for Firebase data…</td></tr></tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="settings" class="panel hide"><h3>Settings</h3><p class="muted">Blue professional Admin Panel • Local-first • Cab + Auto • Unlimited KM range.</p><button class="btn red" id="logout">LOGOUT</button></section></main></div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,setPersistence,browserLocalPersistence,sendPasswordResetEmail}from'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';import{getFirestore,collection,onSnapshot,doc,updateDoc,setDoc,getDoc,getDocs}from'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+const cfg={apiKey:'AIzaSyCKKThIcHKI8jFvOmfXgQZ-UKXwNCiha_U',authDomain:'darshana-sethu-cab.firebaseapp.com',projectId:'darshana-sethu-cab',storageBucket:'darshana-sethu-cab.firebasestorage.app',messagingSenderId:'753735533400',appId:'1:753735533400:web:dd314c6e8b61d2f1b09b2d'};const fb=initializeApp(cfg),auth=getAuth(fb),db=getFirestore(fb);const $=id=>document.getElementById(id);
+await setPersistence(auth,browserLocalPersistence).catch(e=>console.error('Persistence setup:',e));
+
+$('loginBtn').onclick=async()=>{
+  const email=$('email').value.trim();
+  const password=$('password').value;
+  $('msg').textContent='';
+  if(!email){$('msg').textContent='Admin email enter చేయండి.';return}
+  if(!password){$('msg').textContent='Password enter చేయండి.';return}
+  $('loginBtn').disabled=true;
+  $('loginBtn').textContent='LOGGING IN…';
+  try{
+    await setPersistence(auth,browserLocalPersistence);
+    const cred=await signInWithEmailAndPassword(auth,email,password);
+    $('msg').textContent='Login successful: '+(cred.user.email||'');
+  }catch(e){
+    console.error('LOGIN ERROR',e);
+    const map={
+      'auth/invalid-credential':'Email లేదా Password తప్పుగా ఉంది.',
+      'auth/invalid-login-credentials':'Email లేదా Password తప్పుగా ఉంది.',
+      'auth/user-not-found':'ఈ email Firebase Authenticationలో లేదు.',
+      'auth/wrong-password':'Password తప్పుగా ఉంది.',
+      'auth/invalid-email':'Email address సరైనది కాదు.',
+      'auth/operation-not-allowed':'Firebase → Authentication → Sign-in methodలో Email/Password enable చేయాలి.',
+      'auth/network-request-failed':'Internet connection సమస్య ఉంది.'
+    };
+    $('msg').textContent=map[e.code]||('Login failed: '+(e.message||e.code||'Unknown error'));
+  }finally{
+    $('loginBtn').disabled=false;
+    $('loginBtn').textContent='LOGIN';
+  }
+};
+
+$('resetBtn').onclick=async()=>{
+  const email=$('email').value.trim();
+  if(!email){$('msg').textContent='ముందుగా Admin email enter చేయండి.';return}
+  try{
+    await sendPasswordResetEmail(auth,email);
+    $('msg').textContent='Password reset email పంపబడింది. Gmail Spam/Promotions కూడా చూడండి.';
+  }catch(e){
+    console.error('RESET ERROR',e);
+    $('msg').textContent='Reset failed: '+(e.message||e.code||'Unknown error');
+  }
+};
+
+$('logout').onclick=()=>signOut(auth);
+onAuthStateChanged(auth,u=>{if(u){$('login').classList.add('hide');$('app').classList.remove('hide');load();loadFareSettings()}else{$('login').classList.remove('hide');$('app').classList.add('hide')}});
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('main section').forEach(s=>s.classList.add('hide'));$(b.dataset.page).classList.remove('hide');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('title').textContent=b.innerText.replace(/[📊👨‍✈️🚕👤📏💰⭐📈⚙️]/g,'').trim()});
+
+function donationMoney(v){
+  return "₹"+Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:0,maximumFractionDigits:2});
+}
+function donationDate(v){
+  if(!v) return "—";
+  try{
+    const d=v.toDate?v.toDate():new Date(v);
+    return d.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"numeric",minute:"2-digit",hour12:true});
+  }catch(e){return "—";}
+}
+
+onSnapshot(doc(db,"adminFinance","summary"),snap=>{
+  const x=snap.exists()?snap.data():{};
+  const ttd=Number(x.ttdAnnadanam||0);
+  const mahak=Number(x.mahakaleshwarDonation||0);
+  $("ttdDonationTotal").textContent=donationMoney(ttd);
+  $("mahakaleshwarDonationTotal").textContent=donationMoney(mahak);
+  $("totalDonationTotal").textContent=donationMoney(ttd+mahak);
+},err=>console.error("Donation summary:",err));
+
+onSnapshot(collection(db,"adminFinance","transactions"),snap=>{
+  const rows=[];
+  snap.forEach(d=>{
+    const x=d.data()||{};
+    rows.push({
+      id:d.id,
+      bookingId:x.bookingId||d.id,
+      driverId:x.driverId||"—",
+      tripFare:Number(x.tripFare||0),
+      ttd:Number(x.ttdAnnadanam||0),
+      mahak:Number(x.mahakaleshwarDonation||0),
+      createdAt:x.createdAt
+    });
+  });
+  rows.sort((a,b)=>{
+    const ta=a.createdAt?.toMillis?a.createdAt.toMillis():0;
+    const tb=b.createdAt?.toMillis?b.createdAt.toMillis():0;
+    return tb-ta;
+  });
+  $("donationTripCount").textContent=rows.length;
+  $("donationTransactionsBody").innerHTML=rows.length
+    ? rows.map(x=>`<tr><td>${String(x.bookingId)}</td><td>${String(x.driverId)}</td><td>${donationMoney(x.tripFare)}</td><td>${donationMoney(x.ttd)}</td><td>${donationMoney(x.mahak)}</td><td>${donationDate(x.createdAt)}</td></tr>`).join("")
+    : '<tr><td colspan="6">No completed donation transactions yet.</td></tr>';
+},err=>{
+  console.error("Donation transactions:",err);
+  $("donationTransactionsBody").innerHTML='<tr><td colspan="6">Firebase donation data could not be loaded.</td></tr>';
+});
+
+function load(){onSnapshot(collection(db,'bookings'),s=>{let a=0,c=0,com=0,arr=[];s.forEach(d=>{let x=d.data();arr.push({...x,id:d.id});let st=(x.status||'').toLowerCase();if(['accepted','started','ongoing'].includes(st))a++;if(st==='completed')c++;com+=Number(x.platformCommission||0)});$('bookings').textContent=arr.length;$('active').textContent=a;$('completed').textContent=c;$('commission').textContent='₹'+Math.round(com);$('recent').innerHTML=arr.slice(-8).reverse().map(x=>`<tr><td>${x.bookingId||x.id}</td><td>${x.customerName||'-'}</td><td>${x.status||'-'}</td><td>₹${x.fare||x.estimatedFare||0}</td></tr>`).join('')||'<tr><td colspan="4">No bookings</td></tr>';$('ridesBody').innerHTML=arr.filter(x=>!['completed','cancelled'].includes((x.status||'').toLowerCase())).map(x=>`<tr><td>${x.bookingId||x.id}</td><td>${x.customerName||'-'}</td><td>${x.driverName||'-'}</td><td>${x.pickup||'-'}</td><td>${x.destination||x.drop||'-'}</td><td>${x.travelDate||x.date||'-'} ${x.travelTime||x.time||''}</td><td>${x.pickupKm||'—'} / ${x.tripKm||x.distanceKm||'—'}</td><td><span class="badge">${x.status||'pending'}</span></td></tr>`).join('')||'<tr><td colspan="8">No live rides</td></tr>'});onSnapshot(collection(db,'driverApplications'),s=>{let p=0,a=0,arr=[];s.forEach(d=>{let x=d.data();arr.push({...x,id:d.id});if(x.status==='pending')p++;if(x.status==='approved')a++});$('pending').textContent=p;$('approved').textContent=a;$('driversBody').innerHTML=arr.map(x=>`<tr><td>${x.name||x.driverName||'-'}</td><td>${x.vehicleNumber||'-'}</td><td>${x.seatingCapacity||x.seats||'-'}</td><td><span class="badge">${x.status||'pending'}</span></td><td>${x.status==='pending'?`<button class="btn green" onclick="window.approve('${x.id}')">APPROVE</button> <button class="btn red" onclick="window.reject('${x.id}')">REJECT</button>`:''} <button class="edit-btn" onclick="window.openDriverEdit('${x.id}')">✏️ EDIT</button></td></tr>`).join('')||'<tr><td colspan="5">No applications</td></tr>'})}
+
+window.approve=async id=>updateDoc(doc(db,'driverApplications',id),{status:'approved',approvedAt:new Date().toISOString(),welcomeReward:100});
+window.reject=async id=>updateDoc(doc(db,'driverApplications',id),{status:'rejected',rejectedAt:new Date().toISOString()});
+
+function nRate(v){
+  const n=Number(v);
+  return Number.isFinite(n)?n:null;
+}
+
+async function loadFareSettings(){
+  $('fareMsg').textContent='Loading final rates from Firebase…';
+  try{
+    const snap=await getDoc(doc(db,'setting','fare'));
+    if(!snap.exists()) throw new Error('Firebase document setting/fare not found');
+
+    const x=snap.data()||{};
+    const required=[
+      'basicRateUnder25','basicRateAbove25',
+      'fourSeaterOneWay','fourSeaterRoundTrip',
+      'fourPlusOneWay','fourPlusRoundTrip',
+      'commission0to65','commission66to191','commission191plus'
+    ];
+    const missing=required.filter(k=>nRate(x[k])===null);
+    if(missing.length) throw new Error('Missing Firebase fields: '+missing.join(', '));
+
+    $('fourBaseUnder25').value=nRate(x.basicRateUnder25);
+    $('fourBaseAbove25').value=nRate(x.basicRateAbove25);
+    $('fourOneWay').value=nRate(x.fourSeaterOneWay);
+    $('fourRound').value=nRate(x.fourSeaterRoundTrip);
+
+    $('sixBaseUnder25').value=nRate(x.basicRateUnder25);
+    $('sixBaseAbove25').value=nRate(x.basicRateAbove25);
+    $('sixOneWay').value=nRate(x.fourPlusOneWay);
+    $('sixRound').value=nRate(x.fourPlusRoundTrip);
+
+    $('commission0to65').value=nRate(x.commission0to65);
+    $('commission66to191').value=nRate(x.commission66to191);
+    $('commission191plus').value=nRate(x.commission191plus);
+
+    $('pickupOn').checked=x.pickupKmEnabled !== false;
+    $('tripOn').checked=x.tripKmEnabled !== false;
+
+    $('fareMsg').textContent='✓ Final rates loaded from Firebase (setting/fare)';
+  }catch(e){
+    console.error('Fare settings load failed',e);
+    $('fareMsg').textContent='Firebase fare load failed: '+(e.message||e);
+  }
+}
+
+$('saveFare').onclick=async()=>{
+  const fields={
+    basicRateUnder25:$('fourBaseUnder25').value,
+    basicRateAbove25:$('fourBaseAbove25').value,
+    fourSeaterOneWay:$('fourOneWay').value,
+    fourSeaterRoundTrip:$('fourRound').value,
+    fourPlusOneWay:$('sixOneWay').value,
+    fourPlusRoundTrip:$('sixRound').value,
+    commission0to65:$('commission0to65').value,
+    commission66to191:$('commission66to191').value,
+    commission191plus:$('commission191plus').value
+  };
+  const invalid=Object.entries(fields).filter(([,v])=>nRate(v)===null);
+  if(invalid.length){
+    $('fareMsg').textContent='Save blocked: Firebase values are not loaded.';
+    return;
+  }
+  const data={
+    fareVersion:4,
+    basicRateUnder25:Number(fields.basicRateUnder25),
+    basicRateAbove25:Number(fields.basicRateAbove25),
+    fourSeaterOneWay:Number(fields.fourSeaterOneWay),
+    fourSeaterRoundTrip:Number(fields.fourSeaterRoundTrip),
+    fourPlusOneWay:Number(fields.fourPlusOneWay),
+    fourPlusRoundTrip:Number(fields.fourPlusRoundTrip),
+    commission0to65:Number(fields.commission0to65),
+    commission66to191:Number(fields.commission66to191),
+    commission191plus:Number(fields.commission191plus),
+    pickupKmEnabled:$('pickupOn').checked,
+    tripKmEnabled:$('tripOn').checked,
+    tollExtra:true,
+    updatedAt:new Date().toISOString()
+  };
+  try{
+    await setDoc(doc(db,'setting','fare'),data,{merge:true});
+    $('fareMsg').textContent='✓ Saved to Firebase: 3 commission slabs + fare rates.';
+  }catch(e){
+    $('fareMsg').textContent='Save failed. Check Firebase permissions.';
+    console.error(e);
+  }
+};
+
+
+// ---------------- DRIVER EDIT ----------------
+let editingDriverId="";
+window.openDriverEdit=async function(id){
+  try{
+    editingDriverId=id;
+    const snap=await getDoc(doc(db,"driverApplications",id));
+    if(!snap.exists()){alert("Driver record not found");return;}
+    const x=snap.data()||{};
+    $("edName").value=x.name||x.driverName||"";
+    $("edPhone").value=x.phone||x.driverPhone||"";
+    $("edCategory").value=x.vehicleCategory||x.vehicleType||"Cab";
+    $("edCarType").value=x.carType||x.vehicleType||"";
+    $("edSeats").value=x.seatingCapacity||x.seats||"";
+    $("edVehicleNumber").value=x.vehicleNumber||"";
+    $("edMsg").textContent="";
+    $("editDriverModal").classList.remove("hide");
+    $("editDriverModal").style.display="flex";
+  }catch(e){alert("Edit failed: "+(e.message||e.code||e));}
+};
+$("edCancel").onclick=()=>{$("editDriverModal").style.display="none";$("editDriverModal").classList.add("hide");};
+$("edSave").onclick=async()=>{
+  if(!editingDriverId)return;
+  const name=$("edName").value.trim(),phone=$("edPhone").value.replace(/\D/g,"");
+  if(!name||phone.length!==10){$("edMsg").textContent="Name and valid 10-digit phone required.";return;}
+  const driverId="DRIVER_"+phone;
+  const data={name,driverName:name,phone,driverPhone:phone,vehicleCategory:$("edCategory").value,vehicleType:$("edCategory").value,carType:$("edCarType").value.trim(),seatingCapacity:$("edSeats").value.trim(),seats:$("edSeats").value.trim(),vehicleNumber:$("edVehicleNumber").value.trim(),updatedAt:new Date().toISOString()};
+  try{
+    const old=await getDoc(doc(db,"driverApplications",editingDriverId));
+    const oldX=old.exists()?(old.data()||{}):{};
+    data.status=oldX.status||"pending";
+    await setDoc(doc(db,"driverApplications",editingDriverId),data,{merge:true});
+    await setDoc(doc(db,"drivers",driverId),{...data,driverId,approvalStatus:oldX.status==='approved'?'approved':(oldX.approvalStatus||'Pending'),rideEligible:oldX.status==='approved'||oldX.rideEligible===true},{merge:true});
+    const oldPhone=String(oldX.phone||oldX.driverPhone||"").replace(/\D/g,"");
+    if(oldPhone && oldPhone!==phone){
+      const ow=await getDoc(doc(db,"wallets",oldPhone));
+      if(ow.exists()){await setDoc(doc(db,"wallets",phone),{...ow.data(),driverId,driverPhone:phone,updatedAt:new Date().toISOString()},{merge:true});}
+    }
+    await setDoc(doc(db,"wallets",phone),{driverId,driverPhone:phone,updatedAt:new Date().toISOString()},{merge:true});
+    $("edMsg").textContent="✓ Saved to Firebase";
+    setTimeout(()=>{$("editDriverModal").style.display="none";$("editDriverModal").classList.add("hide")},500);
+  }catch(e){console.error(e);$("edMsg").textContent="Save failed: "+(e.message||e.code||e);}
+};
+
+// ---------------- WALLET MANAGEMENT ----------------
+function walletMoney(v){
+  return "₹"+Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:0,maximumFractionDigits:2});
+}
+function walletDate(v){
+  try{
+    const d=v?.toDate?v.toDate():new Date(v);
+    return d.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"numeric",minute:"2-digit",hour12:true});
+  }catch(e){return "—";}
+}
+let walletDriversCache=[];
+let walletTxnCache=[];
+
+async function loadWalletSettings(){
+  try{
+    const s=await getDoc(doc(db,"settings","wallet"));
+    if(s.exists()){
+      const x=s.data()||{};
+      $("walletWhatsapp").value=x.adminWhatsapp||"";
+      $("walletUpiId").value=x.upiId||"";
+    }
+  }catch(e){console.error("Wallet settings:",e);}
+}
+
+$("saveWalletSettings").onclick=async()=>{
+  const adminWhatsapp=$("walletWhatsapp").value.trim().replace(/\D/g,"");
+  const upiId=$("walletUpiId").value.trim();
+  if(!adminWhatsapp){$("walletSettingsMsg").textContent="WhatsApp number enter చేయండి.";return}
+  if(!upiId){$("walletSettingsMsg").textContent="UPI ID enter చేయండి.";return}
+  try{
+    await setDoc(doc(db,"settings","wallet"),{
+      adminWhatsapp,upiId,brandName:"Darshana Sethu",updatedAt:new Date().toISOString()
+    },{merge:true});
+    $("walletSettingsMsg").textContent="✓ Wallet settings saved.";
+  }catch(e){
+    console.error(e);
+    $("walletSettingsMsg").textContent="Save failed. Check Firebase permissions.";
+  }
+};
+
+function renderWalletDrivers(){
+  const sel=$("walletDriver");
+  const current=sel.value;
+  sel.innerHTML='<option value="">Select driver</option>'+
+    walletDriversCache.map(x=>`<option value="${String(x.id).replace(/"/g,"&quot;")}">${String(x.name||x.driverName||x.id)} — ${String(x.phone||x.phoneNumber||"")}</option>`).join("");
+  if(walletDriversCache.some(x=>x.id===current)) sel.value=current;
+
+  $("walletDriversBody").innerHTML=walletDriversCache.length
+    ? walletDriversCache.map(x=>{
+        const bal=Number(x.walletBalance||0);
+        const status=bal>50?'<span class="badge green">Eligible</span>':'<span class="badge red">Low / Block Rides</span>';
+        return `<tr><td>${String(x.name||x.driverName||"-")}</td><td>${String(x.phone||x.phoneNumber||"-")}</td><td><b>${walletMoney(bal)}</b></td><td>${status}</td></tr>`;
+      }).join("")
+    : '<tr><td colspan="4">No drivers found</td></tr>';
+
+  const total=walletDriversCache.reduce((a,x)=>a+Number(x.walletBalance||0),0);
+  $("totalDriverWallet").textContent=walletMoney(total);
+}
+
+// WALLET DRIVER SOURCE: driverApplications is the known working registration source.
+onSnapshot(collection(db,"driverApplications"), async snap=>{
+  try{
+    const apps=[];
+    snap.forEach(d=>{
+      const x=d.data()||{};
+      const phone=String(x.phone||x.driverPhone||x.phoneNumber||"").replace(/\D/g,"");
+      if(phone){
+        apps.push({id:String(x.driverId||"DRIVER_"+phone),docId:d.id,name:x.name||x.driverName||"Driver",phone,vehicleNumber:x.vehicleNumber||"",status:String(x.status||"").toLowerCase()});
+      }
+    });
+    const merged=[];
+    for(const d of apps){
+      let balance=0,walletStatus="";
+      try{const ws=await getDoc(doc(db,"wallets",d.phone));if(ws.exists()){const w=ws.data()||{};balance=Number(w.balance||0);walletStatus=w.walletStatus||"";}}catch(e){console.error("wallet lookup",d.phone,e);}
+      merged.push({...d,walletBalance:balance,walletStatus});
+    }
+    walletDriversCache=merged;
+    renderWalletDrivers();
+  }catch(e){
+    console.error("Wallet application source:",e);
+    $("walletMsg").textContent="Firebase Wallet load error: "+(e.message||e.code||e);
+  }
+},err=>{
+  console.error("Wallet application listener:",err);
+  $("walletMsg").textContent="Firebase Wallet listener error: "+(err.message||err.code||err);
+});
+
+onSnapshot(collection(db,"drivers"), async snap=>{
+  try{
+    const base=[];
+    snap.forEach(d=>{
+      const x=d.data()||{};
+      const phone=String(x.driverPhone||x.phone||x.phoneNumber||"").replace(/\D/g,"");
+      const id=String(x.driverId||d.id||"");
+      const status=String(x.approvalStatus||x.status||"").toLowerCase();
+      if(phone) base.push({id:id||("DRIVER_"+phone),docId:d.id,name:x.driverName||x.name||"Driver",phone,vehicleNumber:x.vehicleNumber||"",status});
+    });
+
+    const wallets=await Promise.all(base.map(async d=>{
+      try{
+        const ws=await getDoc(doc(db,"wallets",d.phone));
+        const w=ws.exists()?(ws.data()||{}):{};
+        return {...d,walletBalance:Number(w.balance||0),walletStatus:w.walletStatus||""};
+      }catch(e){
+        console.error("Wallet read failed for",d.phone,e);
+        return {...d,walletBalance:0,walletStatus:"read-error"};
+      }
+    }));
+
+    walletDriversCache=wallets;
+    renderWalletDrivers();
+  }catch(e){
+    console.error("Wallet drivers:",e);
+    walletDriversCache=[];
+    $("walletDriver").innerHTML='<option value="">Firebase driver load failed</option>';
+    $("walletDriversBody").innerHTML='<tr><td colspan="4">Firebase driver data could not be loaded.</td></tr>';
+  }
+},err=>{
+  console.error("Wallet drivers snapshot:",err);
+  $("walletDriver").innerHTML='<option value="">Firebase error</option>';
+  $("walletDriversBody").innerHTML='<tr><td colspan="4">Firebase driver data could not be loaded.</td></tr>';
+});
+
+onSnapshot(collection(db,"walletTransactions"),snap=>{
+  walletTxnCache=[];
+  snap.forEach(d=>walletTxnCache.push({id:d.id,...(d.data()||{})}));
+  walletTxnCache.sort((a,b)=>{
+    const ta=a.createdAt?.toMillis?a.createdAt.toMillis():new Date(a.createdAt||0).getTime();
+    const tb=b.createdAt?.toMillis?b.createdAt.toMillis():new Date(b.createdAt||0).getTime();
+    return tb-ta;
+  });
+  $("walletTxnCount").textContent=walletTxnCache.length;
+  $("walletTransactionsBody").innerHTML=walletTxnCache.length
+    ? walletTxnCache.slice(0,100).map(x=>`<tr><td>${walletDate(x.createdAt)}</td><td>${String(x.driverName||x.driverId||"—")}</td><td>${x.type==="credit"?'<span class="badge green">Credit</span>':'<span class="badge red">Debit</span>'}</td><td>${walletMoney(x.amount)}</td><td>${String(x.reason||"—")}</td><td>${String(x.source||"admin-adjustment")}</td></tr>`).join("")
+    : '<tr><td colspan="6">No wallet transactions yet.</td></tr>';
+},err=>{
+  console.error("Wallet transactions:",err);
+  $("walletTransactionsBody").innerHTML='<tr><td colspan="6">Firebase wallet transactions could not be loaded.</td></tr>';
+});
+
+onSnapshot(doc(db,"adminFinance","systemWallet"),snap=>{
+  const x=snap.exists()?snap.data():{};
+  $("systemWalletBalance").textContent=walletMoney(x.balance||0);
+},err=>console.error("System wallet:",err));
+
+onSnapshot(collection(db,"walletRechargeRequests"),snap=>{
+  let total=0;
+  snap.forEach(d=>{
+    const x=d.data()||{};
+    if((x.status||"pending")==="pending") total+=Number(x.amount||0);
+  });
+  $("pendingRecharge").textContent=walletMoney(total);
+},err=>console.error("Recharge requests:",err));
+
+$("applyWalletAdjustment").onclick=async()=>{
+  const driverId=$("walletDriver").value;
+  const amount=Math.round(Number($("walletAmount").value||0)*100)/100;
+  const action=$("walletAction").value;
+  const reason=$("walletReason").value.trim()||"Admin Adjustment";
+  if(!driverId){$("walletMsg").textContent="Driver select చేయండి.";return}
+  if(!(amount>0)){$("walletMsg").textContent="Valid amount enter చేయండి.";return}
+
+  try{
+    const driver=walletDriversCache.find(x=>x.id===driverId);
+    if(!driver) throw new Error("Driver not found");
+    const walletRef=doc(db,"wallets",driver.phone);
+    const ws=await getDoc(walletRef);
+    const w=ws.exists()?(ws.data()||{}):{};
+    const current=Number(w.balance||0);
+    const next=action==="credit"?current+amount:current-amount;
+    if(next<0){$("walletMsg").textContent="Debit blocked: wallet cannot go below ₹0.";return}
+
+    await setDoc(walletRef,{
+      balance:next,
+      driverId:driver.id,
+      driverPhone:driver.phone,
+      walletStatus:next>50?"active":"low",
+      updatedAt:new Date().toISOString()
+    },{merge:true});
+
+    await setDoc(doc(db,"drivers",driver.docId),{
+      driverId:driver.id,
+      driverPhone:driver.phone,
+      driverName:driver.name,
+      walletBalance:next,
+      walletStatus:next>50?"active":"low",
+      updatedAt:new Date().toISOString()
+    },{merge:true});
+
+    const txId="WTX-"+Date.now()+"-"+Math.floor(Math.random()*1000);
+    await setDoc(doc(db,"walletTransactions",txId),{
+      driverId:driver.id,
+      driverPhone:driver.phone,
+      driverName:driver.name,
+      type:action,
+      amount,
+      balanceBefore:current,
+      balanceAfter:next,
+      reason,
+      source:"admin-adjustment",
+      createdAt:new Date().toISOString()
+    });
+
+    $("walletAmount").value="";
+    $("walletReason").value="";
+    $("walletMsg").textContent=`✓ ${action==="credit"?"Credit":"Debit"} saved. New balance ${walletMoney(next)}.`;
+  }catch(e){
+    console.error("Wallet adjustment:",e);
+    $("walletMsg").textContent="Wallet update failed: "+(e.message||e.code||"Unknown error");
+  }
+};
+
+loadWalletSettings();
+
+setInterval(()=>$('clock').textContent=new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}),1000);
+
+if('serviceWorker' in navigator){ window.addEventListener('load',async()=>{ try{ const regs=await navigator.serviceWorker.getRegistrations(); for(const r of regs) await r.unregister(); if(window.caches){ const ks=await caches.keys(); await Promise.all(ks.map(k=>caches.delete(k))); } }catch(e){console.warn('Cache cleanup:',e);} }); }
+</script></body></html>
